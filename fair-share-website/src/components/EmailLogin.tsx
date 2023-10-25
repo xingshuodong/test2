@@ -77,19 +77,19 @@ const EmailLogin = () => {
           </span>
         )}
         <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
-          <Link href="#" className="label-text-alt link link-hover">
+          <Link href="#">
             Forgot password?
           </Link>
         </Box>
       </Box>
-      <Box sx={{marginTop: '20px'}}>
+      <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
         <Button variant="contained" fullWidth type="submit">
           Login
         </Button>
       </Box>
-      <Box sx={{marginTop: '20px'}}>
+      <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
         Don&apos;t have an account?
-        <Link className="text-blue-500 underline ml-1" href="/signup">
+        <Link href="/signup">
           Signup
         </Link>
       </Box>
