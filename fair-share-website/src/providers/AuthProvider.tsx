@@ -6,7 +6,6 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
-    updateProfile,
     User,
     UserCredential,
 } from "firebase/auth";
@@ -30,22 +29,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
-
-    const profileUpdate = async (updateUser: Record<string, any> = {}) => {
-        setLoading(true);
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-            await updateProfile(currentUser, updateUser);
-            setUser((preUser) => {
-                if (preUser) {
-                    return { ...preUser, ...updateUser };
-                } else {
-                    return null;
-                }
-            });
-        }
-    };
-
 
 
     const googleLogin = () => {
@@ -74,7 +57,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         loading: boolean;
         createUser: (credentials: EmailPassword) => Promise<UserCredential>;
         signIn: (credentials: EmailPassword) => Promise<UserCredential>;
-        profileUpdate: (updateUser?: Record<string, any>) => Promise<void>;
         googleLogin: () => Promise<UserCredential>;
         logout: () => Promise<void>;
     } = {
@@ -82,7 +64,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         loading,
         createUser,
         signIn,
-        profileUpdate,
         googleLogin,
         logout,
     };

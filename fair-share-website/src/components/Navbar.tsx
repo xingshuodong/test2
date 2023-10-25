@@ -30,10 +30,6 @@ const Navbar = () => {
         const toastId = toast.loading("Loading...");
         try {
           await logout();
-          const res = await fetch("/api/auth/logout", {
-            method: "POST",
-          });
-          await res.json();
           toast.dismiss(toastId);
           toast.success("Successfully logout!");
           startTransition(() => {

@@ -1,26 +1,25 @@
-"use client";
-
-import GoogleLogin from "@/components/GoogleLogin";
 import useAuth from "@/hooks/useAuth";
+import { Box, Button, TextField } from "@mui/material";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { startTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-const LoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+interface IFormInput {
+  email: string;
+  password: string;
+}
 
+const EmailLogin = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const { signIn } = useAuth();
+
   const search = useSearchParams();
   const from = search.get("redirectUrl") || "/";
   const { replace, refresh } = useRouter();
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const { email, password } = data;
     const toastId = toast.loading("Loading...");
     try {
@@ -38,17 +37,16 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-      <div className="form-control">
-        <label htmlFor="email" className="label label-text">
-          Email
-        </label>
-        <input
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box>
+        <TextField
           type="email"
-          placeholder="email"
+          label="Email"
+          placeholder="Enter email"
+          variant="standard"
+          fullWidth
+          required
           id="email"
-          name="email"
-          className="input input-bordered"
           autoComplete="email"
           {...register("email", {
             required: true,
@@ -56,50 +54,47 @@ const LoginForm = () => {
           })}
         />
         {errors.email && (
-          <span className="text-red-500 text-base mt-1">
+          <span>
             Please enter a valid email address.
           </span>
         )}
-      </div>
-      <div className="form-control">
-        <label htmlFor="password" className="label label-text">
-          Password
-        </label>
-        <input
+      </Box>
+      <Box sx={{marginTop: '10px'}}>
+        <TextField
           type="password"
-          placeholder="password"
+          label="Password"
+          placeholder="Enter password"
+          variant="standard"
+          fullWidth
+          required
           id="password"
-          name="password"
-          className="input input-bordered"
           autoComplete="new-password"
           {...register("password", { required: true, minLength: 6 })}
         />
         {errors.password && (
-          <span className="text-red-500 text-base mt-1">
+          <span>
             Please enter a password.
           </span>
         )}
-        <label className="label">
-          <a href="#" className="label-text-alt link link-hover">
+        <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
+          <Link href="#" className="label-text-alt link link-hover">
             Forgot password?
-          </a>
-        </label>
-      </div>
-      <div className="form-control mt-6">
-        <button className="btn btn-primary" type="submit">
+          </Link>
+        </Box>
+      </Box>
+      <Box sx={{marginTop: '20px'}}>
+        <Button variant="contained" fullWidth type="submit">
           Login
-        </button>
-      </div>
-      <p className="mt-3">
+        </Button>
+      </Box>
+      <Box sx={{marginTop: '20px'}}>
         Don&apos;t have an account?
         <Link className="text-blue-500 underline ml-1" href="/signup">
           Signup
         </Link>
-      </p>
-      <div className="divider mt-5">OR</div>
-      <GoogleLogin from={from} />
+      </Box>
     </form>
   );
 };
 
-export default LoginForm;
+export default EmailLogin;

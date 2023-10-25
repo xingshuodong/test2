@@ -1,22 +1,49 @@
-import LoginFormPage from "./LoginForm/LoginForm";
-import styles from "./page.module.css";
+"use client"
 
-export const metadata = {
-  title: "Login - Fair Site",
-};
+import EmailLogin from "@/components/EmailLogin";
+import GoogleLogin from "@/components/GoogleLogin";
+import { Avatar, Grid, Paper, styled } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+
+
 
 const LoginPage = () => {
+
+  const search = useSearchParams();
+  const from = search.get("redirectUrl") || "/";
+
+  const PaperStyle = styled(Paper)({
+    padding: "20px",
+    height: "50vh",
+    width: '280px',
+    margin: '20px auto',
+
+  });
+
+  const CenteredGrid = styled(Grid)({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '20px'
+    
+  });
+
+
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.container}>
-        <div className={styles.loginText}>
-          <h1 className={styles.heading}>Login now!</h1>
-          <p className={styles.subheading}>Login now to connect with us.</p>
-        </div>
-        <div className={styles.loginForm}>
-          <LoginFormPage/>
-        </div>
-      </div>
+    <div>
+      <Grid>
+        <PaperStyle elevation={10}>
+          <CenteredGrid>
+            <h2>Login using Google</h2>
+            <Avatar sx={{ cursor: 'pointer' }}>
+              <GoogleLogin from={from} />
+            </Avatar>
+            <EmailLogin/>
+          </CenteredGrid>
+        </PaperStyle>
+      </Grid>
+
     </div>
   );
 };
