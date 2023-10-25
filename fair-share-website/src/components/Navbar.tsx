@@ -4,7 +4,9 @@ import useAuth from '@/hooks/useAuth'
 import { AccountCircle, Menu } from '@mui/icons-material'
 import { AppBar, Button, styled, Toolbar, Typography } from '@mui/material'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { startTransition, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const StyledToolbar = styled(Toolbar)({
     display: "flex",
@@ -18,10 +20,31 @@ interface User {
 
 const Navbar = () => {
     // const [user, setUser] = useState<any | null>("Suez")
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const { replace, refresh } = useRouter();
     console.log(user)
 
     const { uid } = user || {};
+
+    const handleLogout = async () => {
+        const toastId = toast.loading("Loading...");
+        try {
+          await logout();
+          const res = await fetch("/api/auth/logout", {
+            method: "POST",
+          });
+          await res.json();
+          toast.dismiss(toastId);
+          toast.success("Successfully logout!");
+          startTransition(() => {
+            refresh();
+          });
+        } catch (error) {
+          toast.error("Successfully not logout!");
+          toast.dismiss(toastId);
+        }
+      };
+    
 
 
     return (
@@ -31,7 +54,7 @@ const Navbar = () => {
                 {/* <Menu sx={{display:{xs:"block", sm:"none"}}}/>
                 <AccountCircle sx={{display:{xs:"none", sm:"block"}}}/> */}
                 {
-                    uid ? <Button variant="contained" color='primary'>Logout</Button> : <Link href="/login"><Button variant="contained" color='secondary'>Login</Button></Link>
+                    uid ? <Button onClick={handleLogout} variant="contained" color='primary'>Logout</Button> : <Link href="/login"><Button variant="contained" color='secondary'>Login</Button></Link>
                 }
             </StyledToolbar>
         </AppBar>

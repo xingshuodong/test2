@@ -1,41 +1,24 @@
-"use client"
+import LoginFormPage from "./LoginForm/LoginForm";
+import styles from "./page.module.css";
 
-import { Box, TextField } from '@mui/material'
-import React from 'react'
+export const metadata = {
+  title: "Login - Fair Site",
+};
 
 const LoginPage = () => {
   return (
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          
-          placeholder='Your Email'
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="Hello World"
-        />
-        <TextField
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-        />
+    <div className={styles.mainContainer}>
+      <div className={styles.container}>
+        <div className={styles.loginText}>
+          <h1 className={styles.heading}>Login now!</h1>
+          <p className={styles.subheading}>Login now to connect with us.</p>
+        </div>
+        <div className={styles.loginForm}>
+          <LoginFormPage/>
+        </div>
       </div>
-    </Box>
-  )
-}
+    </div>
+  );
+};
 
-export default LoginPage
+export default LoginPage;
