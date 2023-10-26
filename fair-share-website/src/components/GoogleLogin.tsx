@@ -23,7 +23,7 @@ const GoogleLogin: React.FC<GoogleLoginProps> = ({ from }) => {
         toast.dismiss(toastId);
         toast.success("User signed in successfully");
       });
-    } catch (error) {
+    } catch (error : any) {
       toast.dismiss(toastId);
       toast.error(error.message || "User not signed in");
     }

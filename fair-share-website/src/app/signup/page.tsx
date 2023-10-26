@@ -1,6 +1,6 @@
 "use client"
 
-import EmailSignup from "@/components/EmailSignup";
+import EmailSignup from "@/app/signup/EmailSignup";
 import GoogleLogin from "@/components/GoogleLogin";
 import { Avatar, Box, Chip, Divider, Grid, Paper, styled } from "@mui/material";
 import { useSearchParams } from "next/navigation";

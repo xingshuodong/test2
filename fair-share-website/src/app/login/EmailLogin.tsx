@@ -8,8 +8,9 @@ import { toast } from "react-hot-toast";
 
 interface IFormInput {
   email: string;
-  password: string;
+  password: any;
 }
+
 
 const EmailLogin = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
@@ -20,17 +21,21 @@ const EmailLogin = () => {
   const { replace, refresh } = useRouter();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    console.log(data);
     const { email, password } = data;
     const toastId = toast.loading("Loading...");
     try {
+        // calling firebase authentication method to sign in
       await signIn(email, password);
+      // redirecting after successful login
       startTransition(() => {
         refresh();
         replace(from);
         toast.dismiss(toastId);
         toast.success("User signed in successfully");
       });
-    } catch (error) {
+    } catch (error:any) {
+      // handle auth error
       toast.dismiss(toastId);
       toast.error(error.message || "User not signed in");
     }
@@ -45,7 +50,7 @@ const EmailLogin = () => {
           placeholder="Enter email"
           variant="standard"
           fullWidth
-          required
+          // required
           id="email"
           autoComplete="email"
           {...register("email", {
@@ -59,14 +64,14 @@ const EmailLogin = () => {
           </span>
         )}
       </Box>
-      <Box sx={{marginTop: '10px'}}>
+      <Box sx={{ marginTop: '10px' }}>
         <TextField
           type="password"
           label="Password"
           placeholder="Enter password"
           variant="standard"
           fullWidth
-          required
+          // required
           id="password"
           autoComplete="new-password"
           {...register("password", { required: true, minLength: 6 })}
@@ -76,21 +81,21 @@ const EmailLogin = () => {
             Please enter a password.
           </span>
         )}
-        <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
+        <Box sx={{ marginTop: '20px', cursor: 'pointer' }}>
           <Link href="#">
             Forgot password?
           </Link>
         </Box>
       </Box>
-      <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
+      <Box sx={{ marginTop: '20px', cursor: 'pointer' }}>
         <Button variant="contained" fullWidth type="submit">
           Login
         </Button>
       </Box>
-      <Box sx={{marginTop: '20px', cursor: 'pointer'}}>
-        Don&apos;t have an account?
+      <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
+        Don&apos;t have an account? <br />
         <Link href="/signup">
-          Signup
+           Signup
         </Link>
       </Box>
     </form>

@@ -1,5 +1,5 @@
 import AuthContext from "@/contexts/AuthContext";
-import auth, { googleProvider } from "@/firebase/firebase.auth";
+import  auth, { googleProvider } from "@/firebase/firebase.auth";
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
@@ -13,8 +13,18 @@ import { useEffect, useState } from "react";
 
 type EmailPassword = {
     email: string;
-    password: string;
+    password: any;
 };
+
+type AuthContextValue = {
+    user: User | null;
+    loading: boolean;
+    createUser: (credentials: EmailPassword) => Promise<UserCredential>;
+    signIn: (credentials: EmailPassword) => Promise<UserCredential>;
+    googleLogin: () => Promise<UserCredential>;
+    logout: () => Promise<void>;
+};
+
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
@@ -30,12 +40,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return signInWithEmailAndPassword(auth, email, password);
     };
 
-
+    // google login auth
     const googleLogin = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
     };
 
+    // logout auth
     const logout = () => {
         setLoading(true);
         return signOut(auth);
@@ -52,14 +63,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         };
     }, []);
 
-    const value: {
-        user: User | null;
-        loading: boolean;
-        createUser: (credentials: EmailPassword) => Promise<UserCredential>;
-        signIn: (credentials: EmailPassword) => Promise<UserCredential>;
-        googleLogin: () => Promise<UserCredential>;
-        logout: () => Promise<void>;
-    } = {
+    const value: AuthContextValue = {
         user,
         loading,
         createUser,

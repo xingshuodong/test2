@@ -7,12 +7,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 interface IFormInput {
-    name: string,
+    name: string;
     email: string;
     password: string;
-    confirmPassword: string,
+    confirmPassword: string;
 }
-
 
 const EmailSignup = () => {
     const {
@@ -27,34 +26,39 @@ const EmailSignup = () => {
     const from = search.get("redirectUrl") || "/";
     const { replace, refresh } = useRouter();
 
-
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        const { name, email, password } = data;
+        console.log(data);
+        const { email, password } = data;
         const toastId = toast.loading("Loading...");
         try {
+            // calling firebase authentication method to create a user
             await createUser(email, password);
+
+            // navigating to the desired page
             startTransition(() => {
                 refresh();
                 replace(from);
                 toast.dismiss(toastId);
                 toast.success("User Account Created successfully");
             });
-        } catch (error) {
+        } catch (error : any) {
+            // Handle auth error
             toast.dismiss(toastId);
             toast.error(error.message || "User not signed in");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="text"
                     label="Name"
-                    placeholder="name"
+                    placeholder="Name"
                     variant="standard"
                     fullWidth
                     id="name"
+                    autoComplete="name"
                     {...register("name", { required: true })}
                 />
                 {errors.name && (
@@ -63,24 +67,26 @@ const EmailSignup = () => {
                     </span>
                 )}
             </Box>
-            <Box>
+            <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="email"
                     label="Email"
                     placeholder="Enter email"
                     variant="standard"
                     fullWidth
-                    required
                     id="email"
                     autoComplete="email"
                     {...register("email", {
                         required: true,
-                        pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/,
+                        pattern: {
+                            value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/,
+                            message: 'Please enter a valid email address',
+                        },
                     })}
                 />
                 {errors.email && (
                     <span>
-                        Please enter a valid email address.
+                        {errors.email.message}
                     </span>
                 )}
             </Box>
@@ -91,18 +97,17 @@ const EmailSignup = () => {
                     placeholder="Enter password"
                     variant="standard"
                     fullWidth
-                    required
                     id="password"
                     autoComplete="new-password"
-                    {...register("password", { required: true, minLength: 6 })}
+                    {...register("password", { required: true, minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
                 />
                 {errors.password && (
                     <span>
-                        Please enter a password.
+                        {errors.password.message}
                     </span>
                 )}
             </Box>
-            <Box className="form-control">
+            <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="password"
                     label="Confirm Password"
@@ -110,11 +115,10 @@ const EmailSignup = () => {
                     id="confirmPassword"
                     variant="standard"
                     fullWidth
-                    required
                     autoComplete="new-password"
                     {...register("confirmPassword", {
                         required: true,
-                        minLength: 6,
+                        minLength: { value: 6, message: 'Password must be at least 6 characters' },
                         validate: (value) =>
                             value === getValues("password") || "The passwords do not match.",
                     })}
@@ -130,9 +134,9 @@ const EmailSignup = () => {
                     Sign Up
                 </Button>
             </Box>
-            <Box sx={{ marginTop: '20px' }}>
-                Already have an account?
-                <Link className="text-blue-500 underline ml-1" href="/login">
+            <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
+                Already have an account? <br />
+                <Link href="/login">
                     Login
                 </Link>
             </Box>
