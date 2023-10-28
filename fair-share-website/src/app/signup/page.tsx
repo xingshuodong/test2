@@ -2,7 +2,8 @@
 
 import EmailSignup from "@/app/signup/EmailSignup";
 import GoogleLogin from "@/components/GoogleLogin";
-import { Avatar, Box, Chip, Divider, Grid, Paper, styled } from "@mui/material";
+import { CenteredGrid, GoogleBox, PaperStyle } from "@/styles/AuthStyles";
+import { Avatar, Chip, Divider, Grid} from "@mui/material";
 import { useSearchParams } from "next/navigation";
 
 
@@ -11,30 +12,6 @@ const SignupPage = () => {
 
   const search = useSearchParams();
   const from = search.get("redirectUrl") || "/";
-
-  const PaperStyle = styled(Paper)({
-    padding: "20px",
-    width: '280px',
-    margin: '20px auto',
-
-  });
-
-  const CenteredGrid = styled(Grid)({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '20px'
-
-  });
-
-  const GoogleBox = styled(Box)({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px'
-  })
-
-
 
   return (
     <div>
