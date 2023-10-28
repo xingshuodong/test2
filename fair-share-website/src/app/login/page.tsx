@@ -6,8 +6,6 @@ import { CenteredGrid, GoogleBox, PaperStyle } from "@/styles/AuthStyles";
 import { Avatar, Chip, Divider, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 
-
-
 const LoginPage = () => {
 
   const search = useSearchParams();

@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 
 interface IFormInput {
   email: string;
-  password: any;
+  password: string;
 }
 
 
@@ -44,6 +44,7 @@ const EmailLogin = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box>
+        {/* email field */}
         <TextField
           type="email"
           label="Email"
@@ -58,12 +59,15 @@ const EmailLogin = () => {
             pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/,
           })}
         />
+        {/* email error */}
         {errors.email && (
-          <span>
+          <Box sx={{color: 'red'}}>
             Please enter a valid email address.
-          </span>
+          </Box>
         )}
       </Box>
+
+      {/* password field */}
       <Box sx={{ marginTop: '10px' }}>
         <TextField
           type="password"
@@ -76,22 +80,29 @@ const EmailLogin = () => {
           autoComplete="new-password"
           {...register("password", { required: true, minLength: 6 })}
         />
+        {/* password error */}
         {errors.password && (
-          <span>
+          <Box sx={{color: 'red'}}>
             Please enter a password.
-          </span>
+          </Box>
         )}
+
+        {/* forget password field */}
         <Box sx={{ marginTop: '20px', cursor: 'pointer' }}>
           <Link href="#">
             Forgot password?
           </Link>
         </Box>
       </Box>
+
+      {/* login button */}
       <Box sx={{ marginTop: '20px', cursor: 'pointer' }}>
         <Button variant="contained" fullWidth type="submit">
           Login
         </Button>
       </Box>
+
+      {/* navigating to signup */}
       <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
         Don&apos;t have an account? {" "}
         <Link href="/signup">

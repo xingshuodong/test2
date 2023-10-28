@@ -63,10 +63,11 @@ const EmailSignup = () => {
                     autoComplete="name"
                     {...register("name", { required: true })}
                 />
+                {/* name error */}
                 {errors.name && (
-                    <span>
+                    <Box sx={{color: 'red'}}>
                         Please enter your name.
-                    </span>
+                    </Box>
                 )}
             </Box>
             {/* email field */}
@@ -87,10 +88,11 @@ const EmailSignup = () => {
                         },
                     })}
                 />
+                {/* email error */}
                 {errors.email && (
-                    <span>
-                        {errors.email.message}
-                    </span>
+                    <Box sx={{color: 'red'}}>
+                        {errors.email.message || "Email is required"}
+                    </Box>
                 )}
             </Box>
             {/* password field */}
@@ -115,10 +117,11 @@ const EmailSignup = () => {
                         }
                     })}
                 />
+                {/* password error */}
                 {errors.password && (
-                    <span>
-                        {errors.password.message}
-                    </span>
+                    <Box sx={{color: 'red'}}>
+                        {errors.password.message || "Password is required"}
+                    </Box>
                 )}
             </Box>
             {/* confirm password field */}
@@ -138,10 +141,11 @@ const EmailSignup = () => {
                             value === getValues("password") || "The passwords do not match.",
                     })}
                 />
+                {/* confirm password error */}
                 {errors.confirmPassword && (
-                    <span>
+                    <Box sx={{color: 'red'}}>
                         {errors.confirmPassword.message || "Please confirm your password."}
-                    </span>
+                    </Box>
                 )}
             </Box>
             {/* signup button */}
@@ -150,6 +154,7 @@ const EmailSignup = () => {
                     Sign Up
                 </Button>
             </Box>
+            {/* navigating to login */}
             <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
                 Already have an account? {" "}
                 <Link href="/login">
