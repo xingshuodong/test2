@@ -27,13 +27,13 @@ const EmailSignup = () => {
     const { replace, refresh } = useRouter();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        console.log(data);
-        const { email, password } = data;
+        // console.log(data);
+        // const { email, password } = data;
         // console.log(email, password);
         const toastId = toast.loading("Loading...");
         try {
             // calling firebase authentication method to create a user
-            await createUser(email, password);
+            await createUser(data);
 
             // navigating to the desired page
             startTransition(() => {

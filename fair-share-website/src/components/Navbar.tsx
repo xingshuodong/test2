@@ -1,7 +1,6 @@
 "use client"
 
 import useAuth from '@/hooks/useAuth'
-import { AccountCircle, Menu } from '@mui/icons-material'
 import { AppBar, Button, styled, Toolbar, Typography } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -13,16 +12,12 @@ const StyledToolbar = styled(Toolbar)({
     justifyContent: "space-between",
 })
 
-interface User {
-    uid: string;
-}
-
 
 const Navbar = () => {
     // const [user, setUser] = useState<any | null>("Suez")
     const { user, logout } = useAuth();
-    const { replace, refresh } = useRouter();
-    console.log(user)
+    const { refresh } = useRouter();
+    // console.log(user)
 
     const { uid } = user || {};
 

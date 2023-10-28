@@ -21,12 +21,12 @@ const EmailLogin = () => {
   const { replace, refresh } = useRouter();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log(data);
-    const { email, password } = data;
+    // console.log(data);
+    // const { email, password } = data;
     const toastId = toast.loading("Loading...");
     try {
         // calling firebase authentication method to sign in
-      await signIn(email, password);
+      await signIn(data);
       // redirecting after successful login
       startTransition(() => {
         refresh();
