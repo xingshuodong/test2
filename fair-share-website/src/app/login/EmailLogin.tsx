@@ -61,7 +61,7 @@ const EmailLogin = () => {
         />
         {/* email error */}
         {errors.email && (
-          <Box sx={{color: 'red'}}>
+          <Box sx={{color: 'red', fontSize: '12px'}}>
             Please enter a valid email address.
           </Box>
         )}
@@ -82,7 +82,7 @@ const EmailLogin = () => {
         />
         {/* password error */}
         {errors.password && (
-          <Box sx={{color: 'red'}}>
+          <Box sx={{color: 'red', fontSize: '12px'}}>
             Please enter a password.
           </Box>
         )}

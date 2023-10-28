@@ -65,7 +65,7 @@ const EmailSignup = () => {
                 />
                 {/* name error */}
                 {errors.name && (
-                    <Box sx={{color: 'red'}}>
+                    <Box sx={{color: 'red', fontSize: '12px'}}>
                         Please enter your name.
                     </Box>
                 )}
@@ -90,7 +90,7 @@ const EmailSignup = () => {
                 />
                 {/* email error */}
                 {errors.email && (
-                    <Box sx={{color: 'red'}}>
+                    <Box sx={{color: 'red', fontSize: '12px'}}>
                         {errors.email.message || "Email is required"}
                     </Box>
                 )}
@@ -119,7 +119,7 @@ const EmailSignup = () => {
                 />
                 {/* password error */}
                 {errors.password && (
-                    <Box sx={{color: 'red'}}>
+                    <Box sx={{color: 'red', fontSize: '12px'}}>
                         {errors.password.message || "Password is required"}
                     </Box>
                 )}
@@ -143,7 +143,7 @@ const EmailSignup = () => {
                 />
                 {/* confirm password error */}
                 {errors.confirmPassword && (
-                    <Box sx={{color: 'red'}}>
+                    <Box sx={{color: 'red', fontSize: '12px'}}>
                         {errors.confirmPassword.message || "Please confirm your password."}
                     </Box>
                 )}

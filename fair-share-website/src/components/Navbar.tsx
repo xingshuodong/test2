@@ -36,8 +36,6 @@ const Navbar = () => {
         }
       };
     
-
-
     return (
         <AppBar position='sticky'>
             <StyledToolbar>
