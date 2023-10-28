@@ -1,19 +1,18 @@
-import AuthContext from "@/contexts/AuthContext";
-import  auth, { googleProvider } from "@/firebase/firebase.auth";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { User, UserCredential } from "firebase/auth";
+import auth, { googleProvider } from "@/firebase/firebase.auth";
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
-    User,
-    UserCredential,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
+import AuthContext from "@/contexts/AuthContext";
 
 type EmailPassword = {
     email: string;
-    password: any;
+    password: string;
 };
 
 type AuthContextValue = {
@@ -25,29 +24,26 @@ type AuthContextValue = {
     logout: () => Promise<void>;
 };
 
-
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const createUser = ({ email, password }: EmailPassword) => {
+    const createUser = ({ email, password }: EmailPassword): Promise<UserCredential> => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    const signIn = ({ email, password }: EmailPassword) => {
+    const signIn = ({ email, password }: EmailPassword): Promise<UserCredential> => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
-    // google login auth
-    const googleLogin = () => {
+    const googleLogin = (): Promise<UserCredential> => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
     };
 
-    // logout auth
-    const logout = () => {
+    const logout = (): Promise<void> => {
         setLoading(true);
         return signOut(auth);
     };
@@ -72,13 +68,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         logout,
     };
 
-    // console.log(value)
-
-
-
-    return <AuthContext.Provider value={value}>
-        {children}
-    </AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    )
 };
 
 export default AuthProvider;
