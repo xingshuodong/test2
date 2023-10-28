@@ -93,7 +93,7 @@ const EmailLogin = () => {
         </Button>
       </Box>
       <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
-        Don&apos;t have an account? <br />
+        Don&apos;t have an account? {" "}
         <Link href="/signup">
            Signup
         </Link>

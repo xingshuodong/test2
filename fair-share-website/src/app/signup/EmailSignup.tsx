@@ -29,6 +29,7 @@ const EmailSignup = () => {
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         console.log(data);
         const { email, password } = data;
+        // console.log(email, password);
         const toastId = toast.loading("Loading...");
         try {
             // calling firebase authentication method to create a user
@@ -41,7 +42,7 @@ const EmailSignup = () => {
                 toast.dismiss(toastId);
                 toast.success("User Account Created successfully");
             });
-        } catch (error : any) {
+        } catch (error: any) {
             // Handle auth error
             toast.dismiss(toastId);
             toast.error(error.message || "User not signed in");
@@ -50,6 +51,7 @@ const EmailSignup = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
+            {/* name field */}
             <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="text"
@@ -62,11 +64,12 @@ const EmailSignup = () => {
                     {...register("name", { required: true })}
                 />
                 {errors.name && (
-                    <span className="text-red-500 text-base mt-1">
+                    <span>
                         Please enter your name.
                     </span>
                 )}
             </Box>
+            {/* email field */}
             <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="email"
@@ -90,6 +93,7 @@ const EmailSignup = () => {
                     </span>
                 )}
             </Box>
+            {/* password field */}
             <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="password"
@@ -99,7 +103,17 @@ const EmailSignup = () => {
                     fullWidth
                     id="password"
                     autoComplete="new-password"
-                    {...register("password", { required: true, minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
+                    {...register("password", {
+                        required: true,
+                        minLength: {
+                            value: 6,
+                            message: 'Password must be at least 6 characters',
+                        },
+                        pattern: {
+                            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+                            message: 'Password must minimum six characters, at least one letter, one number and one special character',
+                        }
+                    })}
                 />
                 {errors.password && (
                     <span>
@@ -107,6 +121,7 @@ const EmailSignup = () => {
                     </span>
                 )}
             </Box>
+            {/* confirm password field */}
             <Box sx={{ marginTop: '10px' }}>
                 <TextField
                     type="password"
@@ -129,13 +144,14 @@ const EmailSignup = () => {
                     </span>
                 )}
             </Box>
+            {/* signup button */}
             <Box sx={{ marginTop: '20px' }}>
                 <Button variant="contained" fullWidth type="submit">
                     Sign Up
                 </Button>
             </Box>
             <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
-                Already have an account? <br />
+                Already have an account? {" "}
                 <Link href="/login">
                     Login
                 </Link>
