@@ -22,7 +22,6 @@ const EmailLogin = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     // console.log(data);
-    // const { email, password } = data;
     const toastId = toast.loading("Loading...");
     try {
         // calling firebase authentication method to sign in
