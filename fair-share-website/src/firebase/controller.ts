@@ -2,6 +2,7 @@ import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
 import { firestore } from "./firebase.config"
 
 export const userCollection = collection(firestore, "user");
+export const companyCollection = collection(firestore, "company");
 
 // Add a new user to the "user" collection
 export const addUser = async (userData: any) => {
@@ -19,5 +20,11 @@ export const addUser = async (userData: any) => {
     }
 }
 
+// Add a new company to firestore
+export const addHotel = async(companyData: any) =>{
+    const newCompany = await addDoc(companyCollection, {...companyData})
+    console.log(`New company added at ${newCompany.path}`)
+
+}
 
 
