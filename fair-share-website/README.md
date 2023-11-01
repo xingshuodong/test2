@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Signup/Login Page Usage
 
-## Getting Started
+- **Sign Up Page:** Access the signup page at [http://localhost:3000/signup](http://localhost:3000/signup). Provide a name, email, and password to create a new user account.
 
-First, run the development server:
+- **Login Page:** Access the login page at [http://localhost:3000/login](http://localhost:3000/login). Provide your email and password to sign in.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Google Sign-In:** On the login page, you can also use Google sign-in to authenticate with your Google account.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Authentication State:** The `AuthContext` provider(`AuthProvider.tsx`) manages the user's authentication state and provides functions for user management, including creating, signing in, and logging out.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Functionality in controller.ts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- All the functions responsible for Firestore interaction can be found in the `controller.ts` file.
 
-## Learn More
+- When a user signs up for the first time, their information is used to create a new user account. If the provided email is not already registered, a new user account is created, and the user is redirected to the desired page within the application.
 
-To learn more about Next.js, take a look at the following resources:
+- A new user document is added to the "user" collection in Firestore, including details such as the user's email and the timestamp of account creation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- If the provided email already exists in Firestore, it skip the adding collection.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
