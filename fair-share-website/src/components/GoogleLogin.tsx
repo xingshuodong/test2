@@ -1,3 +1,4 @@
+import { addUser } from "@/firebase/controller";
 import useAuth from "@/hooks/useAuth";
 import { Google } from "@mui/icons-material";
 import { Button } from "@mui/material";
@@ -17,13 +18,19 @@ const GoogleLogin: React.FC<GoogleLoginProps> = ({ from }) => {
     const toastId = toast.loading("Loading...");
     try {
       const { user } = await googleLogin();
+      // console.log(user);
       startTransition(() => {
         refresh();
         replace(from);
         toast.dismiss(toastId);
         toast.success("User signed in successfully");
+        // add new user to firestore
+        addUser({
+          email: user.email,
+          time_created: user.metadata.creationTime
+        })
       });
-    } catch (error : any) {
+    } catch (error: any) {
       toast.dismiss(toastId);
       toast.error(error.message || "User not signed in");
     }

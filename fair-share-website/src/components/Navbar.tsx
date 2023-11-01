@@ -14,12 +14,12 @@ const StyledToolbar = styled(Toolbar)({
 
 
 const Navbar = () => {
-    // const [user, setUser] = useState<any | null>("Suez")
     const { user, logout } = useAuth();
     const { refresh } = useRouter();
     // console.log(user)
 
     const { uid } = user || {};
+
 
     const handleLogout = async () => {
         const toastId = toast.loading("Loading...");
