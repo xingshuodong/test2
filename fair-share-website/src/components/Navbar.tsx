@@ -16,7 +16,7 @@ const StyledToolbar = styled(Toolbar)({
 const Navbar = () => {
     const { user, logout } = useAuth();
     const { refresh } = useRouter();
-    // console.log(user)
+    console.log(user)
 
     const { uid } = user || {};
 
