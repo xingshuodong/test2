@@ -24,8 +24,9 @@ const EmailLogin = () => {
     // console.log(data);
     const toastId = toast.loading("Loading...");
     try {
-        // calling firebase authentication method to sign in
-      await signIn(data);
+      // calling firebase authentication method to sign in
+      const { user } = await signIn(data);
+      // console.log(user);
       // redirecting after successful login
       startTransition(() => {
         refresh();
@@ -33,7 +34,7 @@ const EmailLogin = () => {
         toast.dismiss(toastId);
         toast.success("User signed in successfully");
       });
-    } catch (error:any) {
+    } catch (error: any) {
       // handle auth error
       toast.dismiss(toastId);
       toast.error(error.message || "User not signed in");
@@ -60,7 +61,7 @@ const EmailLogin = () => {
         />
         {/* email error */}
         {errors.email && (
-          <Box sx={{color: 'red', fontSize: '12px'}}>
+          <Box sx={{ color: 'red', fontSize: '12px' }}>
             Please enter a valid email address.
           </Box>
         )}
@@ -81,7 +82,7 @@ const EmailLogin = () => {
         />
         {/* password error */}
         {errors.password && (
-          <Box sx={{color: 'red', fontSize: '12px'}}>
+          <Box sx={{ color: 'red', fontSize: '12px' }}>
             Please enter a password.
           </Box>
         )}
@@ -105,7 +106,7 @@ const EmailLogin = () => {
       <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
         Don&apos;t have an account? {" "}
         <Link href="/signup">
-           Signup
+          Signup
         </Link>
       </Box>
     </form>

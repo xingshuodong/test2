@@ -1,3 +1,4 @@
+import { addUser } from "@/firebase/controller";
 import useAuth from "@/hooks/useAuth";
 import { Box, Button, TextField } from "@mui/material";
 import Link from "next/link";
@@ -27,11 +28,12 @@ const EmailSignup = () => {
     const { replace, refresh } = useRouter();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        console.log(data);
+        // console.log(data);
         const toastId = toast.loading("Loading...");
         try {
             // calling firebase authentication method to create a user
-            await createUser(data);
+            const { user } = await createUser(data);
+            // console.log(user)
 
             // navigating to the desired page
             startTransition(() => {
@@ -39,6 +41,11 @@ const EmailSignup = () => {
                 replace(from);
                 toast.dismiss(toastId);
                 toast.success("User Account Created successfully");
+                // add new user to firestore
+                addUser({
+                    email: user.email,
+                    time_created: user.metadata.creationTime
+                })
             });
         } catch (error: any) {
             // Handle auth error
@@ -63,7 +70,7 @@ const EmailSignup = () => {
                 />
                 {/* name error */}
                 {errors.name && (
-                    <Box sx={{color: 'red', fontSize: '12px'}}>
+                    <Box sx={{ color: 'red', fontSize: '12px' }}>
                         Please enter your name.
                     </Box>
                 )}
@@ -88,7 +95,7 @@ const EmailSignup = () => {
                 />
                 {/* email error */}
                 {errors.email && (
-                    <Box sx={{color: 'red', fontSize: '12px'}}>
+                    <Box sx={{ color: 'red', fontSize: '12px' }}>
                         {errors.email.message || "Email is required"}
                     </Box>
                 )}
@@ -117,7 +124,7 @@ const EmailSignup = () => {
                 />
                 {/* password error */}
                 {errors.password && (
-                    <Box sx={{color: 'red', fontSize: '12px'}}>
+                    <Box sx={{ color: 'red', fontSize: '12px' }}>
                         {errors.password.message || "Password is required"}
                     </Box>
                 )}
@@ -141,7 +148,7 @@ const EmailSignup = () => {
                 />
                 {/* confirm password error */}
                 {errors.confirmPassword && (
-                    <Box sx={{color: 'red', fontSize: '12px'}}>
+                    <Box sx={{ color: 'red', fontSize: '12px' }}>
                         {errors.confirmPassword.message || "Please confirm your password."}
                     </Box>
                 )}
