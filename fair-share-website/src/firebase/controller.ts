@@ -1,3 +1,4 @@
+import { AddCompanyType } from "@/types/AddCompany";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
 import { firestore } from "./firebase.config"
 
@@ -21,7 +22,7 @@ export const addUser = async (userData: any) => {
 }
 
 // Add a new company to firestore
-export const addHotel = async(companyData: any) =>{
+export const addCompany = async(companyData: AddCompanyType) =>{
     const newCompany = await addDoc(companyCollection, {...companyData})
     console.log(`New company added at ${newCompany.path}`)
 
