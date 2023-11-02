@@ -1,4 +1,5 @@
 import useAuth from "@/hooks/useAuth";
+import { EmailPasswordType } from "@/types/EmailPassword";
 import { Box, Button, TextField } from "@mui/material";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -6,26 +7,22 @@ import { startTransition } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-interface IFormInput {
-  email: string;
-  password: string;
-}
-
 
 const EmailLogin = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+  const { register, handleSubmit, formState: { errors } } = useForm<EmailPasswordType>();
   const { signIn } = useAuth();
 
   const search = useSearchParams();
   const from = search.get("redirectUrl") || "/";
   const { replace, refresh } = useRouter();
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  const onSubmit: SubmitHandler<EmailPasswordType> = async (data) => {
     // console.log(data);
     const toastId = toast.loading("Loading...");
     try {
-        // calling firebase authentication method to sign in
-      await signIn(data);
+      // calling firebase authentication method to sign in
+      const { user } = await signIn(data);
+      // console.log(user);
       // redirecting after successful login
       startTransition(() => {
         refresh();
@@ -33,7 +30,7 @@ const EmailLogin = () => {
         toast.dismiss(toastId);
         toast.success("User signed in successfully");
       });
-    } catch (error:any) {
+    } catch (error: any) {
       // handle auth error
       toast.dismiss(toastId);
       toast.error(error.message || "User not signed in");
@@ -60,7 +57,7 @@ const EmailLogin = () => {
         />
         {/* email error */}
         {errors.email && (
-          <Box sx={{color: 'red', fontSize: '12px'}}>
+          <Box sx={{ color: 'red', fontSize: '12px' }}>
             Please enter a valid email address.
           </Box>
         )}
@@ -81,7 +78,7 @@ const EmailLogin = () => {
         />
         {/* password error */}
         {errors.password && (
-          <Box sx={{color: 'red', fontSize: '12px'}}>
+          <Box sx={{ color: 'red', fontSize: '12px' }}>
             Please enter a password.
           </Box>
         )}
@@ -105,7 +102,7 @@ const EmailLogin = () => {
       <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
         Don&apos;t have an account? {" "}
         <Link href="/signup">
-           Signup
+          Signup
         </Link>
       </Box>
     </form>
