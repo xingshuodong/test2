@@ -10,18 +10,18 @@ import {
 } from "firebase/auth";
 import AuthContext from "@/contexts/AuthContext";
 import { AuthContextValue} from "@/types/AuthContextValue";
-import { EmailPassword } from "@/types/EmailPassword";
+import { EmailPasswordType } from "@/types/EmailPassword";
 
 const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const createUser = ({ email, password }: EmailPassword): Promise<UserCredential> => {
+    const createUser = ({ email, password }: EmailPasswordType): Promise<UserCredential> => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    const signIn = ({ email, password }: EmailPassword): Promise<UserCredential> => {
+    const signIn = ({ email, password }: EmailPasswordType): Promise<UserCredential> => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };

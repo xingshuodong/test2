@@ -14,7 +14,7 @@ export const addUser = async (userData: any) => {
     if (querySnapshot.empty) {
         // If the query result is empty, the email doesn't exist, so we can add the user
         const newUser = await addDoc(userCollection, {...userData});
-        console.log("User added successfully to Firestore");
+        // console.log("User added successfully to Firestore");
     } else {
         // If the query result is not empty, the email already exists
         console.log("User with this email already exists in Firestore.");
@@ -24,7 +24,7 @@ export const addUser = async (userData: any) => {
 // Add a new company to firestore
 export const addCompany = async(companyData: AddCompanyType) =>{
     const newCompany = await addDoc(companyCollection, {...companyData})
-    console.log(`New company added at ${newCompany.path}`)
+    // console.log(`New company added at ${newCompany.path}`)
 
 }
 
