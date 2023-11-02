@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export default function DashboardPage() {
-  return (
-    <div>DashboardPage</div>
-  )
+type pageProps = {
+    
+};
+
+const DashboardPage:React.FC<pageProps> = () => {
+    
+    return <div>Dashboard Page</div>
 }
+export default DashboardPage;

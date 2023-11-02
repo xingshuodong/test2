@@ -9,31 +9,19 @@ import {
     signOut,
 } from "firebase/auth";
 import AuthContext from "@/contexts/AuthContext";
-
-type EmailPassword = {
-    email: string;
-    password: string;
-};
-
-type AuthContextValue = {
-    user: User | null;
-    loading: boolean;
-    createUser: (credentials: EmailPassword) => Promise<UserCredential>;
-    signIn: (credentials: EmailPassword) => Promise<UserCredential>;
-    googleLogin: () => Promise<UserCredential>;
-    logout: () => Promise<void>;
-};
+import { AuthContextValue} from "@/types/AuthContextValue";
+import { EmailPasswordType } from "@/types/EmailPassword";
 
 const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const createUser = ({ email, password }: EmailPassword): Promise<UserCredential> => {
+    const createUser = ({ email, password }: EmailPasswordType): Promise<UserCredential> => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    const signIn = ({ email, password }: EmailPassword): Promise<UserCredential> => {
+    const signIn = ({ email, password }: EmailPasswordType): Promise<UserCredential> => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
