@@ -38,8 +38,9 @@ const EmailSignup = () => {
                 toast.success("User Account Created successfully");
                 // add new user to firestore
                 addUser({
-                    email: user.email,
-                    time_created: user.metadata.creationTime
+                    name: user.displayName,
+                    time_created: user.metadata.creationTime,
+                    userId: user.uid
                 })
             });
         } catch (error: any) {

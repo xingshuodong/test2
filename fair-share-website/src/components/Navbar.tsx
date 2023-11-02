@@ -15,7 +15,7 @@ const StyledToolbar = styled(Toolbar)({
 const Navbar = () => {
     const { user } = useAuth();
     // console.log(user)
-
+    
     const { uid } = user || {};
 
     return (
