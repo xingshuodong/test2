@@ -51,8 +51,7 @@ const CreateCompanyPage: React.FC<pageProps> = () => {
                 <Box sx={{ marginTop: '10px' }}>
                     <TextField
                         type="text"
-                        label="Name"
-                        placeholder="Name"
+                        label="Company Name"
                         variant="outlined"
                         fullWidth
                         id="name"
@@ -61,7 +60,7 @@ const CreateCompanyPage: React.FC<pageProps> = () => {
                     />
                     {/* name error */}
                     {errors.name && (
-                        <Box sx={{ color: 'red', fontSize: '12px' }}>
+                        <Box sx={{ color: 'red', fontSize: '14px', mt: 2, mb: 2 }}>
                             Please enter your company name.
                         </Box>
                     )}
