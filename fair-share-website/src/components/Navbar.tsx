@@ -17,7 +17,7 @@ const Navbar = () => {
     const { user, logout } = useAuth();
     const { refresh } = useRouter();
     // console.log(user)
-
+    
     const { uid } = user || {};
 
 
