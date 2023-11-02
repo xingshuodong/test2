@@ -14,7 +14,7 @@ type pageProps = {
 
 
 
-const CreateCompanypage: React.FC<pageProps> = () => {
+const CreateCompanyPage: React.FC<pageProps> = () => {
 
     const {
         register,
@@ -43,6 +43,7 @@ const CreateCompanypage: React.FC<pageProps> = () => {
 
     return (
         <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
+            <Box sx={{textAlign: 'center', mt: 4, mb: 4 }}><h2>Create A New Company</h2></Box>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ marginTop: '10px' }}>
                     <TextField
@@ -66,7 +67,7 @@ const CreateCompanypage: React.FC<pageProps> = () => {
                 {/* login button */}
                 <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                     <Button variant="contained" fullWidth type="submit">
-                        Create Company
+                        Create
                     </Button>
                 </Box>
 
@@ -75,4 +76,4 @@ const CreateCompanypage: React.FC<pageProps> = () => {
         </Container>
     )
 }
-export default CreateCompanypage;
+export default CreateCompanyPage;

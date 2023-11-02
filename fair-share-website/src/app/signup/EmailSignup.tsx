@@ -1,5 +1,6 @@
 import { addUser } from "@/firebase/controller";
 import useAuth from "@/hooks/useAuth";
+import { EmailPasswordType } from "@/types/EmailPassword";
 import { Box, Button, TextField } from "@mui/material";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,12 +8,6 @@ import { startTransition } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-interface IFormInput {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
 
 const EmailSignup = () => {
     const {
@@ -20,14 +15,14 @@ const EmailSignup = () => {
         handleSubmit,
         formState: { errors },
         getValues,
-    } = useForm<IFormInput>();
+    } = useForm<EmailPasswordType>();
 
     const { createUser } = useAuth();
     const search = useSearchParams();
     const from = search.get("redirectUrl") || "/";
     const { replace, refresh } = useRouter();
 
-    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const onSubmit: SubmitHandler<EmailPasswordType> = async (data) => {
         // console.log(data);
         const toastId = toast.loading("Loading...");
         try {
