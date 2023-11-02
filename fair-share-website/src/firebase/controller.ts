@@ -1,19 +1,21 @@
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
-import { firestore } from "./firebase.config"
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { firestore } from "./firebase.config";
 
 export const userCollection = collection(firestore, "user");
 
 // Add a new user to the "user" collection
 export const addUser = async (userData: any) => {
-    // Check if a document with the provided email already exists
-    const querySnapshot = await getDocs(query(userCollection, where("email", "==", userData.email)));
+    const userRef = doc(firestore, "user", userData.userId);
     
-    if (querySnapshot.empty) {
-        // If the query result is empty, the email doesn't exist, so we can add the user
-        const newUser = await addDoc(userCollection, {...userData});
-        console.log("User added successfully to Firestore");
+    // Check if a document with the same userID already exists
+    const docSnap = await getDoc(userRef);
+    
+    if (!docSnap.exists()) {
+        // If the user does not exist, add them
+        await setDoc(userRef, { ...userData });
+        console.log("New user added with ID:", userData.userId);
     } else {
-        // If the query result is not empty, the email already exists
-        console.log("User with this email already exists in Firestore.");
+        // User already exists
+        console.log("User with ID", userData.userId, "already exists.");
     }
-}
+};
