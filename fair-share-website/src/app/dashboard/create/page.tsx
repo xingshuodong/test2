@@ -24,18 +24,20 @@ const CreateCompanyPage: React.FC<pageProps> = () => {
 
     const router = useRouter();
 
-    const onSubmit: SubmitHandler<AddCompanyType> = async (data ) => {
+    const onSubmit: SubmitHandler<AddCompanyType> = async (data) => {
         // console.log(data);
         const toastId = toast.loading("Loading...");
         try {
+            // importing addCompany function to add new Company data to firestore
             addCompany(data)
-            router.push('/dashboard')
             toast.dismiss(toastId);
             toast.success("Company created successfully");
+            // redirecting to dashboard page after successful creation
+            router.push('/dashboard')
 
 
         } catch (error: any) {
-            // Handle auth error
+            // Handle error
             toast.dismiss(toastId);
             toast.error(error.message || "User not signed in");
         }
@@ -43,7 +45,8 @@ const CreateCompanyPage: React.FC<pageProps> = () => {
 
     return (
         <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-            <Box sx={{textAlign: 'center', mt: 4, mb: 4 }}><h2>Create A New Company</h2></Box>
+            <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}><h2>Create A New Company</h2></Box>
+            {/* add a new company form */}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ marginTop: '10px' }}>
                     <TextField
@@ -64,7 +67,7 @@ const CreateCompanyPage: React.FC<pageProps> = () => {
                     )}
                 </Box>
 
-                {/* login button */}
+                {/* Company create button */}
                 <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                     <Button variant="contained" fullWidth type="submit">
                         Create
