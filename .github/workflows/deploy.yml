@@ -9,9 +9,6 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             
-            - name: Navigating to fairsite directory
-              run: cd fair-share-website
-            
             - name: Setup node
               uses: actions/setup-node@v3
               with:
@@ -20,7 +17,7 @@ jobs:
                 cache-dependency-path: fair-share-website/package-lock.json
             
             - name: Install
-              run: npm install
+              run: cd fair-share-website && npm install
             
             - name: Install firebase tools
               run: npm install -g firebase-tools
