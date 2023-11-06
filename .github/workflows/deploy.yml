@@ -19,7 +19,7 @@ jobs:
                 cache: npm
             
             - name: Install
-              run: npm install
+              run: cd fair-share-website && npm install
             
             - name: Install firebase tools
               run: npm install -g firebase-tools
