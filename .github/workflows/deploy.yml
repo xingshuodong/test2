@@ -17,9 +17,10 @@ jobs:
               with:
                 node-version: 20.9.0
                 cache: npm
+                cache-dependency-path: fair-share-website/package-lock.json
             
             - name: Install
-              run: cd fair-share-website && npm install
+              run: npm install
             
             - name: Install firebase tools
               run: npm install -g firebase-tools
