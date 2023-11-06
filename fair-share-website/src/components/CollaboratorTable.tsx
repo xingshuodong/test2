@@ -18,23 +18,6 @@ type rows = {
   value: number;
   investorCash: number;
 };
-function createData(
-  country: string,
-  shareholder: string,
-  ownership: number,
-  sharesOwned: number,
-  value: number,
-  investorCash: number
-) {
-  return { country, shareholder, ownership, sharesOwned, value, investorCash };
-}
-
-const initialRows = [
-  createData("Australia", "Serge (CEO)", 50, 500, 500000, 5000),
-  createData("Australia", "Akila", 37, 50, 14.0, 1848),
-  createData("Australia", "Suez", 13, 20, 5, 660),
-  createData("Australia", "Gurmukh", 0, 0, 0, 0),
-];
 
 export const CollaboratorTable = () => {
   const [rows, setRows] = React.useState<rows[]>([]);
