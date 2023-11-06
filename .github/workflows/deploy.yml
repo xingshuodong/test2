@@ -6,6 +6,15 @@ jobs:
         name: Build
         runs-on: ubuntu-latest
 
+        env:
+          NEXT_PUBLIC_APIKEY: ${{ vars.NEXT_PUBLIC_APIKEY }}
+          NEXT_PUBLIC_AUTHDOMAIN: ${{ vars.NEXT_PUBLIC_AUTHDOMAIN }}
+          NEXT_PUBLIC_PROJECTID: ${{ vars.NEXT_PUBLIC_PROJECTID }}
+          NEXT_PUBLIC_STORAGEBUCKET: ${{ vars.NEXT_PUBLIC_STORAGEBUCKET }}
+          NEXT_PUBLIC_MESSAGINGSENDERID: ${{ vars.NEXT_PUBLIC_MESSAGINGSENDERID }}
+          NEXT_PUBLIC_APPID: ${{ vars.NEXT_PUBLIC_APPID }}
+          NEXT_PUBLIC_MEASUREMENTID: ${{ vars.NEXT_PUBLIC_MEASUREMENTID }}
+
         steps:
             - uses: actions/checkout@v3
             
@@ -19,9 +28,6 @@ jobs:
             - name: Install
               run: npm install
               working-directory: ./fair-share-website
-            
-            - name: Install firebase tools
-              run: npm install -g firebase-tools
             
             - name: Build
               run: npm run build
