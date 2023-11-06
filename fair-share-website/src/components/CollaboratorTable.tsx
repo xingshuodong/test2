@@ -1,12 +1,15 @@
 "use client";
-import * as React from "react";
+import { getCollaborators } from "@/firebase/controller";
+import { calculateSumValue } from "@/utils/utils";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import * as React from "react";
+import TableSkeleton from "./TableSkeleton";
 type rows = {
   country: string;
   shareholder: string;
@@ -34,20 +37,24 @@ const initialRows = [
 ];
 
 export const CollaboratorTable = () => {
-  const [rows, setRows] = React.useState<rows[]>(initialRows);
-  const calculateSumValue = (name: keyof rows) =>
-    rows.reduce((a, b) => {
-      if (b.hasOwnProperty(name) && typeof b[name] === "number") {
-        return a + (b[name] as number);
-      }
-      return 0;
-    }, 0);
+  const [rows, setRows] = React.useState<rows[]>([]);
+
+  React.useEffect(() => {
+    if (!rows.length) {
+      getData();
+    }
+  }, []);
+  const getData = async () => {
+    const collaborators = await getCollaborators();
+    setRows(collaborators as any);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Country</TableCell>
+            <TableCell>Country</TableCell>
             <TableCell align="right">Shareholder</TableCell>
             <TableCell align="right">Ownership %</TableCell>
             <TableCell align="right">Shares Owned</TableCell>
@@ -56,35 +63,37 @@ export const CollaboratorTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.country}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.country}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {row.shareholder}
-              </TableCell>
-              <TableCell align="right">{row.ownership}%</TableCell>
-              <TableCell align="right">{row.sharesOwned}</TableCell>
-              <TableCell align="right">${row.value}</TableCell>
-              <TableCell align="right">${row.investorCash}</TableCell>
-            </TableRow>
-          ))}
+          {!rows.length ? (
+            <TableSkeleton columnNub={6} rowsNum={5} />
+          ) : (
+            rows.map((row, i) => (
+              <TableRow
+                key={i}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.country}
+                </TableCell>
+                <TableCell align="right">{row.shareholder}</TableCell>
+                <TableCell align="right">{row.ownership}%</TableCell>
+                <TableCell align="right">{row.sharesOwned}</TableCell>
+                <TableCell align="right">$ {row.value}</TableCell>
+                <TableCell align="right">$ {row.investorCash}</TableCell>
+              </TableRow>
+            ))
+          )}
           <TableRow>
             <TableCell>Total</TableCell>
             <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
             <TableCell align="right">
-              {calculateSumValue("ownership")}
+              {calculateSumValue<rows>("sharesOwned", rows)}
             </TableCell>
             <TableCell align="right">
-              {calculateSumValue("sharesOwned")}
+              $ {calculateSumValue<rows>("value", rows)}
             </TableCell>
-            <TableCell align="right">$ {calculateSumValue("value")}</TableCell>
             <TableCell align="right">
-              $ {calculateSumValue("investorCash")}
+              $ {calculateSumValue<rows>("investorCash", rows)}
             </TableCell>
           </TableRow>
         </TableBody>
