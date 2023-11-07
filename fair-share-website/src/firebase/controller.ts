@@ -2,13 +2,11 @@
 import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "./firebase.config";
 import { AddCompanyType } from "@/types/AddCompany";
-import { AddContributorType } from "@/types/AddContributor";
-
 
 export const userCollection = collection(firestore, "user");
 export const companyCollection = collection(firestore, "company");
 
-// firestore().collection('users').doc(user.uid).collection("account").add({...});
+
 
 
 // Add a new user to the "user" collection
@@ -35,11 +33,6 @@ export const addCompany = async(companyData: AddCompanyType) =>{
     const newCompany = await addDoc(companyCollection, {...companyData})
     // console.log(`New company added at ${newCompany.path}`)
 
-}
-
-// Add a contributor to firestore
-export const addcontributor = async(Data: AddContributorType) =>{
-    const newCompany = await addDoc(companyCollection, {...Data})
 }
 
 
