@@ -11,14 +11,16 @@ import {
   Container,
   Button,
 } from "@mui/material";
+import { userCollection, companyCollection } from "@/firebase/controller";
+
 
 type Task = {
-  id(id: any): unknown;
+  id: string;
   name?: string;
 };
 
 type User = {
-  id(id: any): unknown;
+  id: string;
   email: string;
 };
 
@@ -28,11 +30,8 @@ export const CompanyPage = () => {
   const [selectedUser, setSelectedUser] = useState<string>(""); // To store the selected user ID
   const [selectedCompany, setSelectedCompany] = useState<string>(""); // To store the selected company ID
 
-  const docRef = collection(firestore, "company");
-  const userCollection = collection(firestore, "user");
-
   useEffect(() => {
-    const unsubscribe = onSnapshot(docRef, (querySnapshot) => {
+    const unsubscribe = onSnapshot(companyCollection, (querySnapshot) => {
       const tasksData = querySnapshot.docs.map((doc) => {
         const data = doc.data();
         return {

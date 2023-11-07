@@ -6,9 +6,6 @@ import { AddCompanyType } from "@/types/AddCompany";
 export const userCollection = collection(firestore, "user");
 export const companyCollection = collection(firestore, "company");
 
-
-
-
 // Add a new user to the "user" collection
 export const addUser = async (userData: any) => {
     const userRef = doc(firestore, "user", userData.userId);
