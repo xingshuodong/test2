@@ -53,7 +53,6 @@ export const CompanyPage = () => {
         const data = doc.data();
         return {
           id: doc.id,
-          name: data?.name,
           email: data?.email,
         };
       });
