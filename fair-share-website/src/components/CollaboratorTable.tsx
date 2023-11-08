@@ -15,8 +15,6 @@ type rows = {
   shareholder: string;
   ownership: number;
   sharesOwned: number;
-  value: number;
-  investorCash: number;
 };
 
 export const CollaboratorTable = () => {
@@ -41,8 +39,6 @@ export const CollaboratorTable = () => {
             <TableCell align="right">Shareholder</TableCell>
             <TableCell align="right">Ownership %</TableCell>
             <TableCell align="right">Shares Owned</TableCell>
-            <TableCell align="right">Approx. Value</TableCell>
-            <TableCell align="right">Investor cash</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -60,8 +56,6 @@ export const CollaboratorTable = () => {
                 <TableCell align="right">{row.shareholder}</TableCell>
                 <TableCell align="right">{row.ownership}%</TableCell>
                 <TableCell align="right">{row.sharesOwned}</TableCell>
-                <TableCell align="right">$ {row.value}</TableCell>
-                <TableCell align="right">$ {row.investorCash}</TableCell>
               </TableRow>
             ))
           )}
@@ -71,12 +65,6 @@ export const CollaboratorTable = () => {
             <TableCell align="right"></TableCell>
             <TableCell align="right">
               {calculateSumValue<rows>("sharesOwned", rows)}
-            </TableCell>
-            <TableCell align="right">
-              $ {calculateSumValue<rows>("value", rows)}
-            </TableCell>
-            <TableCell align="right">
-              $ {calculateSumValue<rows>("investorCash", rows)}
             </TableCell>
           </TableRow>
         </TableBody>
