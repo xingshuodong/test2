@@ -43,7 +43,7 @@ export const CollaboratorTable = () => {
         </TableHead>
         <TableBody>
           {!rows.length ? (
-            <TableSkeleton columnNub={6} rowsNum={5} />
+            <TableSkeleton columnNub={4} rowsNum={5} />
           ) : (
             rows.map((row, i) => (
               <TableRow
