@@ -11,7 +11,6 @@ import { AddCompanyType } from "@/types/AddCompany";
 
 export const userCollection = collection(firestore, "user");
 export const companyCollection = collection(firestore, "company");
-export const collaboratorCollection = collection(firestore, "collaborator");
 
 // Add a new user to the "user" collection
 export const addUser = async (userData: any) => {
@@ -36,7 +35,31 @@ export const addCompany = async (companyData: AddCompanyType) => {
   // console.log(`New company added at ${newCompany.path}`)
 };
 
-export const getCollaborators = async () => {
-  const snapshot = await getDocs(collaboratorCollection);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+export const getCollaborators = async (companyId: string) => {
+  try {
+    const subCollectionRef = collection(
+      companyCollection,
+      companyId,
+      "contributor"
+    );
+    const subCollectionSnapshot = await getDocs(subCollectionRef);
+
+    return subCollectionSnapshot.docs.map((subDoc) => ({
+      id: subDoc.id,
+      ...subDoc.data(),
+    }));
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getCompanies = async () => {
+  try {
+    const snapshot = await getDocs(companyCollection);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
