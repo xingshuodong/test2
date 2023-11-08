@@ -1,7 +1,14 @@
 "use client"
 
 import useAuth from '@/hooks/useAuth'
-import { AppBar, Button, styled, Toolbar, Typography } from '@mui/material'
+
+// Material UI
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+
 import Link from 'next/link'
 import React from 'react'
 import Logout from './Logout'
