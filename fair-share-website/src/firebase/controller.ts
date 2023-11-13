@@ -1,9 +1,9 @@
 import {
   addDoc,
+  getDocs,
   collection,
   doc,
   getDoc,
-  getDocs,
   setDoc,
 } from "firebase/firestore";
 import { firestore } from "./firebase.config";
