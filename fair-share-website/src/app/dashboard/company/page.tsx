@@ -1,5 +1,5 @@
 import React from 'react';
-import { CompanyPage } from '@/components/CompanyPage';
+import  CompanyPage  from '@/components/CompanyPage';
 
 type pageProps = {
     
