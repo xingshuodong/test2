@@ -16,11 +16,12 @@ import { userCollection, companyCollection } from "@/firebase/controller";
 
 type Company = {
   id: string;
-  name?: string;
+  name: string;
 };
 
 type User = {
   id: string;
+  name: string;
   email: string;
 };
 
@@ -67,7 +68,7 @@ const CompanyPage: React.FC = () => {
   }, []);
 
   const handleAddContributor = () => {
-    addContributor(firestore, selectedCompany, selectedUser, userData);
+    addContributor(selectedCompany, selectedUser, userData);
     // Clear the selected company and user
     setSelectedCompany("");
     setSelectedUser("");
@@ -87,9 +88,9 @@ const CompanyPage: React.FC = () => {
             }
             label="Select a Company"
           >
-            {companies.map((task, index) => (
-              <MenuItem key={index} value={task.id}>
-                {task.name}
+            {companies.map((company, index) => (
+              <MenuItem key={index} value={company.id}>
+                {company.name}
               </MenuItem>
             ))}
           </Select>
