@@ -3,7 +3,6 @@ import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "./firebase.config";
 import { AddCompanyType } from "@/types/AddCompany";
 
-
 export const userCollection = collection(firestore, "user");
 export const companyCollection = collection(firestore, "company");
 
