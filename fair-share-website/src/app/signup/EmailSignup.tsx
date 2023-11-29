@@ -113,7 +113,9 @@ const EmailSignup = () => {
                             message: 'Password must be at least 6 characters',
                         },
                         pattern: {
-                            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+                            // value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+                            // Updated the regex pattern below
+                            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[(),\-_@$!%*#?&])[A-Za-z\d(),\-_@$!%*#?&]{6,}$/,
                             message: 'Password must minimum six characters, at least one letter, one number and one special character',
                         }
                     })}
